@@ -1,33 +1,44 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-import Aux from '../../../hoc/Aux';
+import Aux from '../../../hoc/Aux/Aux';
 import Button from '../../UI/Button/Button';
 
 
-const orderSummary = (props) => {
+class OrderSummary extends Component {
+//this could be functional component. doesnt have to be a class because we check for the update within the modal component. 
+    componentDidUpdate() {
+        console.log('order summary will update');
+    }
 
-    const ingredientSummary = Object.keys(props.ingredients).map(igKey => {
-        return (<li key={igKey}>
-                    <span style={{textTransform: 'capitalize'}}>{igKey}: </span> 
-                    {props.ingredients[igKey]}
-                </li> )
-    })
+    render() {
 
+        const ingredientSummary = Object.keys(this.props.ingredients).map(igKey => {
+            return (<li key={igKey}>
+                        <span style={{textTransform: 'capitalize'}}>{igKey}: </span> 
+                        {this.props.ingredients[igKey]}
+                    </li> )
+        })
+        return (
 
-    return (
-        <Aux>
+            <Aux>
             <h3>Your Order</h3>
             <p>One burger with: </p>
             <ul>
                 {ingredientSummary}
             </ul>
-            <p>Total Price: <strong>${props.price.toFixed(2)}</strong></p>
+            <p>Total Price: <strong>${this.props.price.toFixed(2)}</strong></p>
             <p>Continue to Checkout?</p>
-            <Button btnType='Danger' clicked={props.purchaseCanceled}>Cancel</Button>
-            <Button btnType='Success' clicked={props.purchaseContinued}>Continue</Button>
+            <Button btnType='Danger' clicked={this.props.purchaseCanceled}>Cancel</Button>
+            <Button btnType='Success' clicked={this.props.purchaseContinued}>Continue</Button>
         </Aux>
-    )
+
+
+        )
+    }
+
+
+
 
 }
 
-export default orderSummary;
+export default OrderSummary;
